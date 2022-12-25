@@ -1,0 +1,29 @@
+output {
+    background-color: gold;
+    display: block;
+    width: 300px;
+    border: 1px solid grey;
+    height: 100px;
+    margin-bottom: 10px;
+
+}
+
+.buttons {
+    display: grid;
+    width: 300px;
+    height: 300px;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    border: 1px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.double-length {
+    grid-column-end: span 2;
+}
+
