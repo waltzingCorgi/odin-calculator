@@ -1,9 +1,11 @@
 // Delcare and intialize global variables
 let numArray = ["", ""]
+let result = "";
 let operator = "";
 
 // Set DOM elements
-const output = document.querySelector("output");
+const output = document.querySelector(".current-output");
+const expressionDisplay = document.querySelector(".expression");
 const numButtons = document.querySelectorAll(".num");
 const decimalButton = document.querySelector(".decimal");
 const operatorButtons = document.querySelectorAll(".operator");
@@ -34,7 +36,7 @@ function inputNumber(value) {
     const index = getNumIndex();
 
     numArray[index] += value;
-    output.textContent = numArray[index];
+    updateDisplay(index);
 }
 
 function inputDecimal() {
@@ -45,21 +47,28 @@ function inputDecimal() {
     numArray[index] += ".";
     if (numArray[index] === ".") numArray[index] = "0" + numArray[index];
 
-    output.textContent = numArray[index];
+    updateDisplay(index);
 }
 
 function inputOperator(value) {
     const index = getNumIndex();
 
-    if (index === 0) operator = getOperatorFunction(value);
+    if (index === 0) {
+        if (numArray[index] == "") numArray[index] = 0;
+        operator = getOperatorFunction(value);
+    }
+
+    updateDisplay(index);
 }
 
 function inputCalculate() {
+    const index = getNumIndex();
     const num1 = Number(numArray[0]);
     const num2 = Number(numArray[1]);;
 
-    if (getNumIndex() === 1) {
-        output.textContent = operate(operator, num1, num2);
+    if (index === 1) {
+        result = operate(operator, num1, num2);
+        updateDisplay(index);
         reset();
     }
 }
@@ -68,13 +77,18 @@ function inputClear() {
     const index = getNumIndex();
 
     numArray[index] = "";
-    output.textContent = numArray[0];
+    updateDisplay(index);
 }
 
 function inputAllClear() {
     reset();
+    updateDisplay(0);
+}
 
-    output.textContent = numArray[0];
+// Output functions
+function updateDisplay(index) {
+    output.textContent = (result !== "" ? result : numArray[index]);
+    expressionDisplay.textContent = numArray[0] + " " + getOperatorSymbol(operator) + " " + numArray[1] + " " + getEqualsSymbol(result);
 }
 
 // Operator functions
@@ -122,10 +136,32 @@ function getOperatorFunction(operator) {
     }
 }
 
+function getOperatorSymbol(operator) {
+    switch (operator) {
+        case "":
+            return "";
+        case add:
+            return "+";
+        case subtract:
+            return "-";
+        case multiply:
+            return "*";
+        case divide:
+            return "/";
+        default:
+            return "Error";
+    }
+}
+
+function getEqualsSymbol(result) {
+    return result !== "" ? "=" : "";
+}
+
 function reset() {
-    operator = "";
     numArray[0] = "";
     numArray[1] = "";
+    result = "";
+    operator = "";
 }
 
 // Function graveyard
