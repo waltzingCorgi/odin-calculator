@@ -1,3 +1,11 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: bisque;
+}
+
 output {
     background-color: rgb(77, 189, 137);
     display: block;
@@ -48,7 +56,8 @@ button {
     border-radius: 5px;
 }
 
-.double-length {
-    grid-column-end: span 2;
-}
 
+/* CSS Graveyard */
+/* .double-length { */
+    /* grid-column-end: span 2; */
+/* } */
